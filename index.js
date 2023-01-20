@@ -1,17 +1,25 @@
 const express = require('express');
 const path = require('path');
-// const cors = require('cors');
+const morgan = require('morgan');
+const cors = require('cors');
 const { createUser } = require('./db/index');
 const app = express();
 
 //middleware
+app.use(express.static('public'));
+app.use(morgan('dev'));
+app.use(cors());
+app.use(express.json());
 
 //routes
 app.get('/', (req, res, next) => {
+  console.log('get');
   res.sendFile(path.join(__dirname, '/public/index.html'));
+  next();
 });
 
 app.post('/register', async (req, res, next) => {
+  console.log('attempting to register');
   const { username, password } = req.body;
   try {
     await createUser({ username, password });
