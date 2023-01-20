@@ -1,6 +1,6 @@
 let token;
 
-const registerUser = async () => {
+const registerUser = async ({ username, password }) => {
   try {
     const response = await fetch('http://localhost:3000/register', {
       method: 'POST',
@@ -8,8 +8,8 @@ const registerUser = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: 'test',
-        password: 'test',
+        username,
+        password,
       }),
     });
     const result = await response.json();
@@ -19,7 +19,7 @@ const registerUser = async () => {
   }
 };
 
-const createEntry = async () => {
+const createEntry = async ({ title, content }) => {
   const response = await fetch('http://localhost:3000/entry', {
     method: 'POST',
     headers: {
@@ -27,14 +27,25 @@ const createEntry = async () => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      title: 'test',
-      content: 'test content for my new entry',
-      username: 'test',
+      title,
+      content,
     }),
   });
 };
 
-document.getElementById('registerBtn').addEventListener('click', registerUser);
-document
-  .getElementById('createEntryBtn')
-  .addEventListener('click', createEntry);
+document.getElementById('registerForm').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const username = document.getElementById('username');
+  const password = document.getElementById('password');
+  registerUser({ username: username.value, password: password.value });
+  username.value = '';
+  password.value = '';
+});
+document.getElementById('entryForm').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  const title = document.getElementById('title');
+  const content = document.getElementById('content');
+  createEntry({ title: title.value, content: content.value });
+  title.value = '';
+  content.value = '';
+});

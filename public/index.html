@@ -5,12 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      body {
+        background-color: cornsilk;
+      }
+    </style>
   </head>
   <body>
     HELLO
 
-    <button id="registerBtn">Register</button>
-    <button id="createEntryBtn">Create Entry</button>
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button id="registerBtn" type="submit">Register</button>
+    </form>
+
+    <form id="entryForm">
+      <input type="text" id="title" placeholder="Title" />
+      <input type="text" id="content" placeholder="Content" />
+      <button id="createEntryBtn" type="submit">Create Entry</button>
+    </form>
 
     <script src="./script.js"></script>
   </body>
