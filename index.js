@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
-const { createUser } = require('./db/index');
+const { createUser, createEntry } = require('./db/index');
 const app = express();
 
 //middleware
@@ -27,6 +27,20 @@ app.post('/register', async (req, res, next) => {
     res
       .status(409)
       .send({ error: 'register error', message: 'could not register' });
+  }
+});
+
+app.post('/entry', async (req, res, next) => {
+  console.log('attempting to create entry');
+  const { title, content, username } = req.body;
+  try {
+    await createEntry({ title, content, username });
+    res.status(200).send({ message: 'entry created successfully!' });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(409)
+      .send({ error: 'entry error', message: 'could not create entry' });
   }
 });
 

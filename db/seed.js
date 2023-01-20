@@ -5,6 +5,7 @@ const dropTables = async () => {
   try {
     await client.query(`
         DROP TABLE IF EXISTS users;
+        DROP TABLE IF EXISTS entries;
         `);
     console.log('Dropped tables!');
   } catch (error) {
@@ -21,7 +22,12 @@ const createTables = async () => {
             username VARCHAR(255) UNIQUE NOT NULL,
             password VARCHAR(255) NOT NULL
         );
-        `);
+        CREATE TABLE entries (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(255) NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            content TEXT NOT NULL
+        );`);
   } catch (error) {
     throw error;
   }
