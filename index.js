@@ -1,15 +1,13 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
-const cors = require('cors');
 const { createUser } = require('./db/index');
 const app = express();
 
 //middleware
 app.use(express.static('public'));
-app.use(morgan('dev'));
-app.use(cors());
 app.use(express.json());
+app.use(morgan('dev'));
 
 //routes
 app.get('/', (req, res, next) => {
@@ -25,6 +23,7 @@ app.post('/register', async (req, res, next) => {
     await createUser({ username, password });
     res.status(200).send({ message: 'registered successfully!' });
   } catch (error) {
+    console.error(error);
     res
       .status(409)
       .send({ error: 'register error', message: 'could not register' });
