@@ -1,3 +1,5 @@
+let token;
+
 const registerUser = async () => {
   try {
     const response = await fetch('http://localhost:3000/register', {
@@ -10,7 +12,8 @@ const registerUser = async () => {
         password: 'test',
       }),
     });
-    console.log(response);
+    const result = await response.json();
+    token = result.token;
   } catch (error) {
     console.error(error);
   }
@@ -21,6 +24,7 @@ const createEntry = async () => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       title: 'test',

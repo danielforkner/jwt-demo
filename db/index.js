@@ -2,7 +2,9 @@ const client = require('./client');
 
 const createUser = async ({ username, password }) => {
   try {
-    await client.query(
+    const {
+      rows: [user],
+    } = await client.query(
       `
         INSERT INTO users (username, password)
         values ($1, $2)
@@ -10,6 +12,7 @@ const createUser = async ({ username, password }) => {
         `,
       [username, password]
     );
+    return user;
   } catch (error) {
     throw error;
   }
@@ -17,7 +20,9 @@ const createUser = async ({ username, password }) => {
 
 const createEntry = async ({ title, content, username }) => {
   try {
-    await client.query(
+    const {
+      rows: [entry],
+    } = await client.query(
       `
             INSERT INTO entries (title, content, username)
             values ($1, $2, $3)
@@ -25,6 +30,7 @@ const createEntry = async ({ title, content, username }) => {
             `,
       [title, content, username]
     );
+    return entry;
   } catch (error) {
     throw error;
   }

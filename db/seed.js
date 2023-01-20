@@ -26,7 +26,8 @@ const createTables = async () => {
             id SERIAL PRIMARY KEY,
             username VARCHAR(255) NOT NULL,
             title VARCHAR(255) NOT NULL,
-            content TEXT NOT NULL
+            content TEXT NOT NULL,
+            dateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );`);
   } catch (error) {
     throw error;
