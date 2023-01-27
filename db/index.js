@@ -1,5 +1,23 @@
 const client = require('./client');
 
+// create a getUserById function
+const getUserById = async (id) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+    SELECT * FROM users
+    WHERE id=$1;
+    `,
+      [id]
+    );
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const createUser = async ({ username, password }) => {
   try {
     const {
@@ -39,4 +57,5 @@ const createEntry = async ({ title, content, username }) => {
 module.exports = {
   createUser,
   createEntry,
+  getUserById,
 };

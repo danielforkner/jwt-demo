@@ -50,4 +50,14 @@ const seedDb = async () => {
   }
 };
 
-seedDb();
+const buildDb = async () => {
+  try {
+    await dropTables();
+    await createTables();
+    console.log('Seeding successful!');
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { buildDb, seedDb };
