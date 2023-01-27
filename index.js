@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
@@ -28,7 +30,10 @@ app.post('/register', async (req, res, next) => {
   try {
     const user = await createUser({ username, password });
     console.log(user);
-    const token = jwt.sign({ username: user.username, id: user.id }, 'secret');
+    const token = jwt.sign(
+      { username: user.username, id: user.id },
+      process.env.JWT_SECRET
+    );
     res.status(200).send({ message: 'registered successfully!', token: token });
   } catch (error) {
     console.error(error);
@@ -56,7 +61,9 @@ app.post('/entry', async (req, res, next) => {
 
 const client = require('./db/client');
 
-app.listen(3000, async () => {
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, async () => {
   console.log('listening on port 3000');
   try {
     await client.connect();

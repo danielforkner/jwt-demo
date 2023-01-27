@@ -1,5 +1,7 @@
 const { Client } = require('pg');
 
-const client = new Client('postgres://localhost:5432/jwt-demo');
+console.log(process.env.DB_URL);
+
+const client = new Client(process.env.DB_URL);
 
 module.exports = client;
