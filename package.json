@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "seed": "node db/seed.js",
-    "test:math": "jest math"
+    "test:math": "jest math",
+    "test:db": "jest db"
   },
   "keywords": [],
   "author": "",

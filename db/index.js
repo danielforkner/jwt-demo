@@ -1,5 +1,7 @@
 const client = require('./client');
 
+// create a getUserById function
+
 const createUser = async ({ username, password }) => {
   try {
     const {
