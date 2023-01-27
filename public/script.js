@@ -2,7 +2,7 @@ let token;
 
 const registerUser = async ({ username, password }) => {
   try {
-    const response = await fetch('http://localhost:3000/register', {
+    const response = await fetch('https://jwt-demo.onrender.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ const registerUser = async ({ username, password }) => {
 };
 
 const createEntry = async ({ title, content }) => {
-  const response = await fetch('http://localhost:3000/entry', {
+  const response = await fetch('https://jwt-demo.onrender.com/entry', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
