@@ -16,9 +16,22 @@ describe('Testing the Database', () => {
   });
   describe('Create a new User', () => {
     const userToCreate = { username: 'jest', password: '1234' };
+    let createdUser;
     test('A user object is returned', async () => {
-      const createdUser = await createUser(userToCreate);
+      createdUser = await createUser(userToCreate);
       expect(createdUser).toBeDefined();
     });
+    // test('Passwords are hashed', async () => {
+    //   expect(createdUser.password).not.toBe(userToCreate.password);
+    // });
+    test('The created user is the same as the user to create', async () => {
+      expect(createdUser.username).toBe('jest');
+      expect(createdUser.password).toBe('1234');
+    });
+    test('Get user by id returns the user', async () => {
+      const identicalUser = await getUserById(createdUser.id);
+      expect(identicalUser).toEqual(createdUser);
+    });
   });
+  describe('Create a new Entry', () => {});
 });
