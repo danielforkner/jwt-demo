@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
 const { createUser, createEntry } = require('./db/index');
+const checkAuth = require('./api/checkAuth');
 const app = express();
 const jwt = require('jsonwebtoken');
 
@@ -21,10 +22,6 @@ app.get('/', (req, res, next) => {
   next();
 });
 
-//flaws:
-//1. no validation on username and password
-//2. no token being sent back to client
-//3. no password hashing
 app.post('/register', async (req, res, next) => {
   console.log('attempting to register');
   const { username, password } = req.body;
@@ -41,33 +38,8 @@ app.post('/register', async (req, res, next) => {
   }
 });
 
-app.use('/entry', (req, res, next) => {
-  const prefix = 'Bearer ';
-  const auth = req.header('Authorization');
-  console.log('auth', auth);
-  if (!auth) {
-    res.status(401).send({
-      message: 'you must provide a valid token to perform the requested action',
-    });
-  } else {
-    const token = auth.slice(prefix.length);
-    const decoded = jwt.verify(token, 'secret');
-    if (!decoded) {
-      res.status(401).send({
-        message:
-          'you must provide a valid token to perform the requested action',
-      });
-    } else {
-      req.body = { ...req.body, token: decoded };
-      console.log('token is good');
-      next();
-    }
-  }
-});
+app.use('/entry', checkAuth);
 
-// flaws:
-//1. no token validation
-//2. no validation on title
 app.post('/entry', async (req, res, next) => {
   console.log('attempting to create entry');
   const { title, content, token } = req.body;
