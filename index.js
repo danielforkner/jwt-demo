@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const bcrypt = require('bcrypt');
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
@@ -28,7 +29,8 @@ app.post('/register', async (req, res, next) => {
   console.log('attempting to register');
   const { username, password } = req.body;
   try {
-    const user = await createUser({ username, password });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await createUser({ username, password: hashedPassword });
     console.log(user);
     const token = jwt.sign(
       { username: user.username, id: user.id },
