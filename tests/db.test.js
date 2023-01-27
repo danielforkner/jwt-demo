@@ -19,7 +19,7 @@ describe('Testing the Database', () => {
     let createdUser;
     test('A user object is returned', async () => {
       createdUser = await createUser(userToCreate);
-      expect(createdUser).toBeDefined();
+      expect(typeof createdUser).toBe('object');
     });
     // test('Passwords are hashed', async () => {
     //   expect(createdUser.password).not.toBe(userToCreate.password);
@@ -28,10 +28,22 @@ describe('Testing the Database', () => {
       expect(createdUser.username).toBe('jest');
       expect(createdUser.password).toBe('1234');
     });
+    // situation that students are in
     test('Get user by id returns the user', async () => {
       const identicalUser = await getUserById(createdUser.id);
       expect(identicalUser).toEqual(createdUser);
     });
   });
-  describe('Create a new Entry', () => {});
+  describe('Create a new Entry', () => {
+    const entryToCreate = {
+      title: 'First post!',
+      content: 'I am always the first poster on any site!',
+      username: 'jest',
+    };
+    let createdEntry;
+    test('An entry object is returned', async () => {
+      createdEntry = await createEntry(entryToCreate);
+      expect(typeof createdEntry).toBe('object');
+    });
+  });
 });
