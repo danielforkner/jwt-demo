@@ -1,10 +1,4 @@
-function add(num1, num2) {
-  return num1 + num2;
-}
-
-function subtract(num1, num2) {
-  return num1 - num2;
-}
+const { add, subtract } = require('./math/index.js');
 
 describe('Math Function', () => {
   let num1 = 5;
